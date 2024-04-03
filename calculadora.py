@@ -17,3 +17,4 @@ while status == "c":
 		print(val1 * val2)
 	else:
 		print("ERROR")
+
