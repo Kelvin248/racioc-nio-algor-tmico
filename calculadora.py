@@ -5,10 +5,14 @@ while status == "c":
     	
 	if oper == "s":
         	break
-    	val1 = float(input("?"))
-    	val2 = float(input("??"))
+	if oper !="+" and oper !="-" and oper!="/" and oper!="*":
+		print("ERROR")
+		continue
+	
+	val1 = float(input("?"))
+	val2 = float(input("??"))
     
-	elif oper == "+":
+	if oper == "+":
 		print(val1 + val2)
 	elif oper == "-":
 		print(val1 - val2)
@@ -16,6 +20,3 @@ while status == "c":
 		print(val1 / val2)
 	elif oper == "*":
 		print(val1 * val2)
-	else:
-		print("ERROR")
-
