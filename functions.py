@@ -5,14 +5,17 @@ class character:
         self.rotate = False
         self.life = 100
         self.speed = vel
-        self.rect = pygame.Rect((x,y,80,180))
+        self.player_higth = 180
+        self.rect = pygame.Rect((x,y,80,self.player_higth))
         self.surface = surface
         self.vel_y = 0
         self.jump = True
         self.attack_grid = True
         self.attack_type = 0
         
-    
+    # def images_load(self,sprites, steps):
+
+
     def move(self,up,down,left,right, attack1,attack2,target):
         key = pygame.key.get_pressed()
 
@@ -27,8 +30,13 @@ class character:
         if key[right]:
             dx +=self.speed
         if key[up] and self.jump:
-            self.vel_y -= 25
+            self.vel_y -= 20
             self.jump = False
+        if key[down]:
+            self.player_higth = self.player_higth*.4
+        else:
+            self.player_higth =
+
 
         #Rotacionando personagens:
         if target.rect.centerx > self.rect.centerx:
@@ -44,11 +52,11 @@ class character:
 
         if self.rect.left + dx <0:
             dx = -self.rect.left
-        if self.rect.right + dx > 1200:
-            dx = 1200 - self.rect.right
-        if self.rect.bottom + dy > 670:
+        if self.rect.right + dx > 800:
+            dx = 800 - self.rect.right
+        if self.rect.bottom + dy > 570:
             self.vel_y = 0
-            dy = 670 - self.rect.bottom
+            dy = 570 - self.rect.bottom
             self.jump = True
         
         if self.attack_grid:

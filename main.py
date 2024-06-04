@@ -4,7 +4,7 @@ from functions import *
 
 pygame.init()
 
-screen = pygame.display.set_mode((1200,800))
+screen = pygame.display.set_mode((800,600))
 pygame.display.set_caption("PUC Fight")
 
 #importando sprites
@@ -14,29 +14,27 @@ pygame.display.set_caption("PUC Fight")
 #background = pygame.image.load('backgrounds/sky bridge.png')
 
 #Animação = [n° frames,]
-ANIMATION_IDLE = [4,]
+ANIMATION_IDLE = [4,20]
 
 
 #criando os jogadores
 player_1 = character(100,screen,7,300,400)
 player_2 = character(100,screen,7,500,400)
 
-
-
 #barra de vida dos personagens
 
 def draw_life_bar(life, x, y):
     ratio = life / 100
-    pygame.draw.rect(screen, 'black',(x -2,y -2 , 403,34))
-    pygame.draw.rect(screen, 'white',(x,y, 400,30))
-    pygame.draw.rect(screen, 'red',(x,y, 400*ratio,30))
+    pygame.draw.rect(screen, 'black',(x -2,y -2 , 253,24))
+    pygame.draw.rect(screen, 'white',(x,y, 250,20))
+    pygame.draw.rect(screen, 'red',(x,y, 250*ratio,20))
 
 
 def enemy_draw_life_bar(life, x, y):
     ratio = life / 100
-    pygame.draw.rect(screen, 'black',(x -2,y -2 , 403,34))
-    pygame.draw.rect(screen, 'white',(x,y, 400,30))
-    pygame.draw.rect(screen, 'red',(x+(400-(400*ratio)),y, 400*ratio,30))
+    pygame.draw.rect(screen, 'black',(x -2,y -2 , 253,24))
+    pygame.draw.rect(screen, 'white',(x,y, 250,20))
+    pygame.draw.rect(screen, 'red',(x+(250-(250*ratio)),y, 250*ratio,20))
 
 
 Clock = pygame.time.Clock()
@@ -55,7 +53,7 @@ while running == True:
 
     #desenhando a vida do jogador
     draw_life_bar(player_1.life,20,20)
-    enemy_draw_life_bar(player_2.life,780,20)
+    enemy_draw_life_bar(player_2.life,530,20)
 
 
 
