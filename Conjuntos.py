@@ -9,14 +9,7 @@ def subconjuntos():
         except:
             print('ERRO DE VALOR')
             continue
-        x = input('valor conjunto B:\n')
-        try:
-            x = int(x)
-            B.append(x)
-        except:
-            print('ERRO DE VALOR')
-            continue
-        op2 = input('1 - Continuar\n2 - Parar de acrescentar valores ao conjuntos\n3 - Sair')
+        op2 = input('1 - Continuar conjunto A\n2 - Parar de acrescentar valores ao conjunto A\n')
         try:
             op2 = int(op2)
         except:
@@ -26,21 +19,40 @@ def subconjuntos():
             continue
         elif op2 == 2:
             break
-        elif op2 == 3:
-            return
         else:
             print("Opção incorreta, encerrando")
+            return
+        
+    print(f'O conjunto A está completo: {A}')
+
+    while True:
+        x = input('valor conjunto B:\n')
+        try:
+            x = int(x)
+            B.append(x)
+        except:
+            print('ERRO DE VALOR')
+            continue
+        op2 = input('1 - Continuar conjunto B\n2 - Parar de acrescentar valores ao conjunto B\n')
+        try:
+            op2 = int(op2)
+        except:
+            print("Valor de entrada errado, finalizando operacao")
+            return
+        if op2 == 1:
+            continue
+        elif op2 == 2:
             break
+        else:
+            print("Opção incorreta, encerrando")
+            return
     
-    x = 0
-    for i in range(len(B)):
-        for n in range(len(A)):
-            if A[n] == B[i]:
-                x += 1
-    if x == len(A):
-        return print("A é subconjunto próprio de B")
+    print(f'O conjunto B está completo: {B}')
+    
+    if set(A).issubset(set(B)):
+        print("A é subconjunto de B")
     else:
-        return print("A não é subconjunto próprio de B")
+        print("A não é subconjunto de B")
     
 
 def uniao():    
@@ -54,14 +66,7 @@ def uniao():
         except:
             print('ERRO DE VALOR')
             continue
-        x = input('valor conjunto B:\n')
-        try:
-            x = int(x)
-            B.append(x)
-        except:
-            print('ERRO DE VALOR')
-            continue
-        op2 = input('1 - Continuar\n2 - Parar de acrescentar valores ao conjuntos\n3 - Sair')
+        op2 = input('1 - Continuar conjunto A\n2 - Parar de acrescentar valores ao conjunto A\n')
         try:
             op2 = int(op2)
         except:
@@ -71,14 +76,37 @@ def uniao():
             continue
         elif op2 == 2:
             break
-        elif op2 == 3:
-            return
         else:
             print("Opção incorreta, encerrando")
-            break
+            return
+        
+    print(f'O conjunto A está completo: {A}')
 
-    answer = A|B
-    return print(answer) 
+    while True:
+        x = input('valor conjunto B:\n')
+        try:
+            x = int(x)
+            B.append(x)
+        except:
+            print('ERRO DE VALOR')
+            continue
+        op2 = input('1 - Continuar conjunto B\n2 - Parar de acrescentar valores ao conjunto B\n')
+        try:
+            op2 = int(op2)
+        except:
+            print("Valor de entrada errado, finalizando operacao")
+            return
+        if op2 == 1:
+            continue
+        elif op2 == 2:
+            break
+        else:
+            print("Opção incorreta, encerrando")
+            return
+    
+    print(f'O conjunto B está completo: {B}')
+    resposta = set(A) | set(B)
+    return print(resposta) 
 
 
 def interseccao():    
@@ -92,14 +120,7 @@ def interseccao():
         except:
             print('ERRO DE VALOR')
             continue
-        x = input('valor conjunto B:\n')
-        try:
-            x = int(x)
-            B.append(x)
-        except:
-            print('ERRO DE VALOR')
-            continue
-        op2 = input('1 - Continuar\n2 - Parar de acrescentar valores ao conjuntos\n3 - Sair')
+        op2 = input('1 - Continuar conjunto A\n2 - Parar de acrescentar valores ao conjunto A\n')
         try:
             op2 = int(op2)
         except:
@@ -109,13 +130,37 @@ def interseccao():
             continue
         elif op2 == 2:
             break
-        elif op2 == 3:
-            return
         else:
             print("Opção incorreta, encerrando")
+            return
+        
+    print(f'O conjunto A está completo: {A}')
+
+    while True:
+        x = input('valor conjunto B:\n')
+        try:
+            x = int(x)
+            B.append(x)
+        except:
+            print('ERRO DE VALOR')
+            continue
+        op2 = input('1 - Continuar conjunto B\n2 - Parar de acrescentar valores ao conjunto B\n')
+        try:
+            op2 = int(op2)
+        except:
+            print("Valor de entrada errado, finalizando operacao")
+            return
+        if op2 == 1:
+            continue
+        elif op2 == 2:
             break
+        else:
+            print("Opção incorreta, encerrando")
+            return
     
-    answer = A - B
-    return print(answer)
+    print(f'O conjunto B está completo: {B}')
+    
+    resposta = set(A).intersection(set(B))
+    return print(f'Interseção: {resposta}')
 
 

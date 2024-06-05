@@ -79,9 +79,9 @@ def menu_matrizes():
             if op == 1:
                 determ()
             elif op == 2:
-                print("Chamar a função que faz a opçao 2")
+                mult_matriz()
             elif op == 3:
-                print("Chamar a função que faz a opçao 3")
+                transposta()
             else:
                 menu_principal()
 

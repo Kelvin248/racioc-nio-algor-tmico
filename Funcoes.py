@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import numpy as np
 def raizes():
     print("função ax^2+bx+c")
     while True:
@@ -30,11 +32,12 @@ def raizes():
         else:
             break
     if delta == 0:
-        print("raíz única:" + (-b + delta**(1/2))/2*a)
+        print("Raíz única: " + str((-b + delta**(1/2)) / (2*a)))
         return
     else:
-        print("raíz 1:((-b+ delta^2)/2*a)" + ((-b + delta**(1/2))/2*a) + "\nraíz 2:((-b+ delta^2)/2*a)" + ((-b + delta**(1/2))/2*a))
+        print("Raíz 1: " + str((-b + delta**(1/2)) / (2*a)) + "\nRaíz 2: " + str((-b - delta**(1/2)) / (2*a)))
         return
+    
 def valor_fx():
     print("função ax^2+bx+c")
     while True:
@@ -107,8 +110,6 @@ def vertice():
 
 
 def grafico():
-    import matplotlib.pyplot as plt
-    import numpy as np
     print("função ax^2+bx+c")
     while True:
         a =input("valor de a:\n")
