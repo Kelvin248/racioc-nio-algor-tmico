@@ -33,9 +33,9 @@ class character:
             self.vel_y -= 20
             self.jump = False
         if key[down]:
-            self.player_higth = self.player_higth*.4
+            self.player_higth = 160
         else:
-            self.player_higth =
+            self.player_higth = 180
 
 
         #Rotacionando personagens:

@@ -18,8 +18,8 @@ ANIMATION_IDLE = [4,20]
 
 
 #criando os jogadores
-player_1 = character(100,screen,7,300,400)
-player_2 = character(100,screen,7,500,400)
+player_1 = character(100,screen,7,40,400)
+player_2 = character(100,screen,7,680,400)
 
 #barra de vida dos personagens
 
