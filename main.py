@@ -15,7 +15,7 @@ FIGHTER_SCALE = 2.3
 FIGHTER_OFFSET = [44,50]
 FIGHER_DATA = [FIGHTER_SIZE, FIGHTER_SCALE, FIGHTER_OFFSET]
 #Animação = [n° frames/linha]
-ANIMATION_IDLE = [6, 4, 10, 4,3,8,3]
+ANIMATION_IDLE = [6,4,10,4,3,8,3,2,3]
 
 
 #criando os jogadores
@@ -52,8 +52,8 @@ while running == True:
 
 
     #adicionando movimento e limite na tela
-    player_1.move(pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d, pygame.K_k, pygame.K_l, player_2)
-    player_2.move(pygame.K_UP,pygame.K_DOWN,pygame.K_LEFT,pygame.K_RIGHT, pygame.K_1,pygame.K_2,player_1)
+    player_1.move(pygame.K_w, pygame.K_a, pygame.K_d, pygame.K_k, pygame.K_l,pygame.K_j, player_2)
+    player_2.move(pygame.K_UP,pygame.K_LEFT,pygame.K_RIGHT, pygame.K_1,pygame.K_2,pygame.K_3,player_1)
 
 
     #atualizando sprite
