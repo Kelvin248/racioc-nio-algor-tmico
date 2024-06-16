@@ -15,7 +15,7 @@ FIGHTER_SCALE = 2.3
 FIGHTER_OFFSET = [44,50]
 FIGHER_DATA = [FIGHTER_SIZE, FIGHTER_SCALE, FIGHTER_OFFSET]
 #Animação = [n° frames/linha]
-ANIMATION_IDLE = [6, 4]
+ANIMATION_IDLE = [6, 4, 10, 4,3,8,3]
 
 
 #criando os jogadores
