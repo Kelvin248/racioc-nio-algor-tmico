@@ -57,17 +57,17 @@ class character:
         
         #controles
         if self.live and target.live:
-            if key[left] and not ((key[attack1] or key[attack2]) and self.jump):
+            if key[left] and not ((key[attack1] or key[attack2]) and self.jump) and not self.defend:
                 dx -= self.speed
                 self.running = True
                 self.rotate = True
-            elif key[right] and not ((key[attack1] or key[attack2]) and self.jump):
+            elif key[right] and not ((key[attack1] or key[attack2]) and self.jump) and not self.defend:
                 dx +=self.speed
                 self.running = True
             else:
                 self.running = False
              
-            if key[up] and self.jump:
+            if key[up] and self.jump and not self.defend:
                 self.vel_y -= 20
                 self.jump = False
 
@@ -140,7 +140,7 @@ class character:
                 self.update_action(3)
             if self.attack_type == 3 and not self.jump:
                 self.update_action(8)
-        elif self.defend:
+        elif self.defend and self.life >0:
             self.update_action(7)
 
         elif self.running:
@@ -196,7 +196,7 @@ class character:
                     pygame.draw.rect(self.surface,'red',punch_attack)
 
                 if punch_attack.colliderect(target) and target.defend:
-                    target.life -= 0
+                    target.life -= .8
                     self.attack_grid = False
                     pygame.draw.rect(self.surface,'red',punch_attack)
 
@@ -213,7 +213,7 @@ class character:
                     pygame.draw.rect(self.surface,'red',kick_attack)      
             
                 if kick_attack.colliderect(target) and target.defend:
-                    target.life -= 0
+                    target.life -= 3
                     self.attack_grid = False
                     pygame.draw.rect(self.surface,'red',kick_attack)      
             
@@ -226,8 +226,8 @@ class character:
                     target.damage = True
                     self.attack_grid = False
                     pygame.draw.rect(self.surface,'red',kick_attack)
-                if kick_attack.colliderect(target) and not target.defend:
-                    target.life -= 3
+                if kick_attack.colliderect(target) and target.defend:
+                    target.life -= .8
                     target.damage = True
                     self.attack_grid = False
                     pygame.draw.rect(self.surface,'red',kick_attack)
