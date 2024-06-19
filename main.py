@@ -499,7 +499,7 @@ while start:
             ranking.append([])
             ranking[cont].append(f"{cont + 1}°  {lista_atualizada[cont][0]} ({lista_atualizada[cont][1]})")
             cont += 1
-
+        vencedor = None
         # Função principal
         def main2():
             clock = pygame.time.Clock()
