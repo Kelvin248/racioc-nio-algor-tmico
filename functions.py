@@ -225,7 +225,7 @@ class character:
         if self.frame_index == len(self.animation_list[self.action]):
             
             if self.defend:
-                self.frame_index = -1
+                self.frame_index = len(self.animation_list[self.action] ) - 1
 
             elif self.action == 2 or self.action == 3 or self.action == 6:
                 self.update_action(0)

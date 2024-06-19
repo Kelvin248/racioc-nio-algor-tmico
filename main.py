@@ -375,8 +375,8 @@ while start:
 
             
             #adicionando movimento e limite na tela
-            player_1.move(pygame.K_w, pygame.K_a, pygame.K_d, pygame.K_k, pygame.K_l,pygame.K_j, player_2)
-            player_2.move(pygame.K_UP,pygame.K_LEFT,pygame.K_RIGHT, pygame.K_1,pygame.K_2,pygame.K_3,player_1)
+            player_1.move(pygame.K_w, pygame.K_a, pygame.K_d, pygame.K_1,pygame.K_2,pygame.K_3 , player_2)
+            player_2.move(pygame.K_UP,pygame.K_LEFT,pygame.K_RIGHT,pygame.K_k, pygame.K_l,pygame.K_j,player_1)
 
 
             #atualizando sprite
