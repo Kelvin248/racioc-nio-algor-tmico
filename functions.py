@@ -1,4 +1,49 @@
 import pygame
+import time
+
+def round():
+    round = pygame.mixer.Sound("sound/começo de round.mp3")
+    return round.play()
+
+def run():
+    run = pygame.mixer.Sound("sound/correndo.mp3")
+    return run.play()
+
+def soco():
+    soco = pygame.mixer.Sound("sound/dando dano (soco).mp3")
+    return soco.play()
+
+def chute():
+    chute = pygame.mixer.Sound("sound/dando dano(chute).mp3")
+    return chute.play()
+
+def defesa():
+    defesa = pygame.mixer.Sound("sound/defesa.mp3")
+    return defesa.play()
+
+def dam():
+    dam = pygame.mixer.Sound("sound/gemido levando dano.mp3")
+    return dam.play()
+
+def dam2():
+    dam2 = pygame.mixer.Sound("sound/levando dano.mp3")
+    return dam2.play()
+
+def dam3():
+    dam3 = pygame.mixer.Sound("sound/chute no ar.mp3")
+    return dam3.play()
+
+
+def jum():
+    jump = pygame.mixer.Sound("sound/pulo.mp3")
+    return jump.play()
+
+def die():
+    die = pygame.mixer.Sound("sound/audio morrendo.mp3")
+    return die.play()
+
+
+
 
 class character:
     def __init__(self,life, vel, x,y,height,data, sprites, steps, surface):
@@ -6,7 +51,7 @@ class character:
         self.speed = vel
         self.player_heigth = height
         self.height = height
-        self.rect = pygame.Rect((x,y,80,self.player_heigth))
+        self.rect = pygame.Rect((x,y,95,300))
         self.surface = surface
 
         #manipulação de sprites
@@ -69,6 +114,8 @@ class character:
              
             if key[up] and self.jump and not self.defend:
                 self.vel_y -= 20
+                if self.jump and not self.attack_type == 3:
+                    jum()
                 self.jump = False
 
 
@@ -132,35 +179,40 @@ class character:
     def update_sprites(self):
         
         if not self.jump and not self.attack_type == 3:
-            self.update_action(2)
-        elif self.attack_accept and self.attack_cooldown ==0:
+            self.update_action(5)
+        elif self.attack_accept and self.attack_cooldown == 0:
             if self.attack_type == 1:
-                self.update_action(1)
+                self.update_action(2)
             if self.attack_type == 2:
                 self.update_action(3)
             if self.attack_type == 3 and not self.jump:
-                self.update_action(8)
-        elif self.defend and self.life >0:
-            self.update_action(7)
+                self.update_action(6)
+        elif self.defend and self.life > 0:
+            self.update_action(4)
 
         elif self.running:
-            self.update_action(5)
+            self.update_action(1)
         
         elif self.life <= 0:
+            die()
             self.live = False
             self.attack_grid = False
-            self.update_action(4)
+            self.update_action(7)
             if self.image == self.animation_list[self.action][-1]:
                 self.frame_index = -1
         
+        elif self.target.life <= 0:
+            self.update_action(8)
+
         elif self.damage:
-            self.update_action(6)
+            self.update_action(9)
             if self.image == self.animation_list[self.action][-1]:
                 self.damage = False
         
         else:
             self.update_action(0)
-        animation_cooldown = 50
+        animation_cooldown = 85
+
         self.image = self.animation_list[self.action][self.frame_index]
         
         
@@ -170,13 +222,16 @@ class character:
             self.timer = pygame.time.get_ticks()
 
         if self.frame_index == len(self.animation_list[self.action]):
-            if self.action == 1 or self.action == 3 or self.action == 8:
+            
+            if self.defend:
+                self.frame_index = -1
+
+            elif self.action == 2 or self.action == 3 or self.action == 6:
                 self.update_action(0)
                 self.attack_grid = True
                 self.attack_accept = False
                 self.attack_cooldown = 12
-            elif self.defend:
-                self.frame_index = -1
+                self.attack_type = 0
             else:
                 self.frame_index = 0
 
@@ -187,55 +242,73 @@ class character:
         if self.attack_cooldown ==0:
             if punch == True and self.live and self.jump:
                 punch_attack = pygame.Rect(self.rect.centerx -(1.5* self.rect.width * self.rotate) ,self.rect.y, 1.5*self.rect.width,self.rect.height/2)
-                pygame.draw.rect(self.surface,'green',punch_attack)
                 
                 if punch_attack.colliderect(target) and not target.defend:
                     target.life -= 5
                     target.damage = True
+                    if self.attack_grid:
+                        dam()
                     self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',punch_attack)
+
+                    
 
                 if punch_attack.colliderect(target) and target.defend:
                     target.life -= .8
+                    if self.attack_grid:
+                        defesa()
                     self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',punch_attack)
 
+                
+                else:
+                    if self.attack_grid:
+                        soco()
+                    self.attack_grid = False
 
 
             if kick == True and self.live and self.jump:
                 kick_attack = pygame.Rect(self.rect.centerx -(1.5* self.rect.width * self.rotate) ,self.rect.y+90, 1.5*self.rect.width,self.rect.height/2)
-                pygame.draw.rect(self.surface,'green',kick_attack)
 
                 if kick_attack.colliderect(target) and not target.defend:
                     target.life -= 10
                     target.damage = True
-                    self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',kick_attack)      
+                    if self.attack_grid:
+                        dam2()
+                        self.attack_grid = False
             
                 if kick_attack.colliderect(target) and target.defend:
                     target.life -= 3
-                    self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',kick_attack)      
-            
+                    if self.attack_grid:
+                        defesa()
+                        self.attack_grid = False
+
+                else:
+                    if self.attack_grid:
+                        chute()
+                        self.attack_grid = False
 
             if kick == True and self.live and not self.jump:
                 kick_attack = pygame.Rect(self.rect.centerx -(1.5* self.rect.width * self.rotate) ,self.rect.y+90, 1.5*self.rect.width,self.rect.height/2)
-                pygame.draw.rect(self.surface,'green',kick_attack)
+                
                 if kick_attack.colliderect(target) and not target.defend:
                     target.life -= 3
                     target.damage = True
-                    self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',kick_attack)
+                    if self.attack_grid:
+                        dam3()
+                        self.attack_grid = False
+
+                
                 if kick_attack.colliderect(target) and target.defend:
                     target.life -= .8
                     target.damage = True
-                    self.attack_grid = False
-                    pygame.draw.rect(self.surface,'red',kick_attack)
+                    if self.attack_grid:
+                        defesa()
+                        self.attack_grid = False
+                
+                else:
+                    if self.attack_grid:
+                        chute()
+                        self.attack_grid = False
 
-
-
-
-    def draw(self, color):
+    def draw(self):
         img = pygame.transform.flip(self.image, self.rotate, False)
-        pygame.draw.rect(self.surface, color, self.rect)
         self.surface.blit(img,(self.rect.x - (self.offset[0]*self.image_scale), self.rect.y - (self.offset[1]*self.image_scale)))

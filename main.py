@@ -20,6 +20,11 @@ font_p = pygame.font.Font("font/ARCADECLASSIC.TTF", 30)
 font_p_mapas = pygame.font.Font("font/ARCADECLASSIC.TTF", 17)
 fontmenu = pygame.font.Font("font/ARCADECLASSIC.TTF", 50)
 font2menu = pygame.font.Font("font/ARCADECLASSIC.TTF", 100)
+font4 = pygame.font.Font("font/ARCADECLASSIC.TTF", 36)
+
+
+background_imagem = pygame.image.load('img/background.jpg').convert()
+background_imagem = pygame.transform.scale(background_imagem, (largura, altura))
 
 
 pygame.mixer.init()
@@ -28,6 +33,12 @@ def musica1():
     pygame.mixer.music.load('sound/TheSynthWars.mp3')
     
     return pygame.mixer.music.play(-1)
+
+def musica2():
+    pygame.mixer.music.load('sound/musica do combate.mp3')
+
+    return pygame.mixer.music.play(-1)
+
 
 musica1()
 
@@ -44,12 +55,22 @@ complexoesportivo = pygame.image.load('mapas/complexo esportivo.jpg').convert_al
 frentebiblioteca = pygame.image.load('mapas/frente biblioteca.jpg').convert_alpha()
 blocoverde = pygame.image.load('mapas/interior bloco verde.jpg').convert_alpha()
 museu = pygame.image.load('mapas/museu universitario.jpg').convert_alpha()
-aleatorio = pygame.image.load('mapas/aleatorio.jpg')
+Casa_estrela = pygame.image.load('mapas/Casa estrela.jpg').convert_alpha()
+
+sprite_adryan = pygame.image.load('sprites/sprites_a.png').convert_alpha()
+sprite_caio = pygame.image.load('sprites/sprites_c.png').convert_alpha()
+sprite_gustavo = pygame.image.load('sprites/sprites_g.png').convert_alpha()
+sprite_kelvin = pygame.image.load('sprites/sprites_k.png').convert_alpha()
+
+sprite_personagens = [sprite_adryan,sprite_gustavo, sprite_kelvin, sprite_caio]
+
+matriz_sprite = [[6,8,4,4,3,6,3,3,3,2], [6,8,4,3,3,7,3,3,3,3], [6,8,4,4,3,6,3,3,3,2], [6,8,4,3,3,6,3,3,3,3]]
+nomes = ["Adryan","Gustavo","Kelvin","Caio"]
 
 
 # Lista dos personagens
 personagens = [personagem_adryan, personagem_gustavo, personagem_kelvin, personagem_caio]
-mapas = [bibliotecaI, bibliotecaII, blocolaranja, complexoesportivo, frentebiblioteca, blocoverde, museu, aleatorio]
+mapas = [bibliotecaI, bibliotecaII, blocolaranja, complexoesportivo, frentebiblioteca, blocoverde, museu, Casa_estrela]
 
 
 
@@ -70,7 +91,6 @@ x_inicial_mapas = 50
 # Definindo a posição y inicial para as duas linhas de mapas
 y_botoes_primeira_linha = 210
 y_botoes_segunda_linha = 330
-
 
 
 # Criando botões personagem
@@ -94,7 +114,7 @@ for i, mapa in enumerate(mapas):
         x = x_inicial_mapas + (i - 4) * (botao_largura_mapas + espacamento_horizontal_mapas)
         y = y_botoes_segunda_linha + espacamento_vertical_mapas
         y += espacamento_vertical_mapas
-    nome_mapas = ["Biblioteca I", "Biblioteca II", "Bloco Laranja", "Complexo Esportivo", "Frente Biblioteca", "Bloco Verde", "Museu", "Aleatorio"]
+    nome_mapas = ["Biblioteca I", "Biblioteca II", "Bloco Laranja", "Complexo Esportivo", "Frente Biblioteca", "Bloco Verde", "Museu", "Casa estrela"]
     botao2 = Button_mapas(x, y, personagem_redimensionada, nome_mapas[i], tela, font_p_mapas)
     botoes_mapa.append(botao2)
 
@@ -106,8 +126,7 @@ def quit_game():
 def start_game():
     return False
 def show_score():
-    print("Mostrando pontuações...")
-    # Aqui você pode adicionar a lógica para mostrar as pontuações
+    return None
 
 
 
@@ -155,6 +174,9 @@ def main(start):
     if start_clicked:
         start = False
         return start
+    if score_clicked:
+        score = "Score"
+        return score
 
 
 
@@ -162,14 +184,19 @@ def main(start):
 
 
 
-
-
-
+personagem_1 = None
+personagem_2 = None
+lista = None
+lista_1 = None
 selected_index_p2 = 3
 selected_index_p1 = 0
 counter = 0
+counterp1 = 0
+counterp2 = 0
 start = True
 variavel = 0
+vencedor = None
+
 Clock = pygame.time.Clock()
 while start:
     if variavel == 0:
@@ -180,6 +207,9 @@ while start:
                 start_menu = main(start_menu)
                 if start_menu == False:
                     return 1
+                if start_menu == "Score":
+                    return 2
+                #elif show_score
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
 
@@ -194,6 +224,8 @@ while start:
         main_menu()
         if main_menu() == 1:
             variavel = 1
+        if main_menu() == 2:
+            variavel = 4
 
 
 
@@ -204,9 +236,6 @@ while start:
         som_selecao = pygame.mixer.Sound("sound/selecaosound.mp3")
         selecionado = pygame.mixer.Sound('sound/selecionado.mp3')
 
-
-        background_imagem = pygame.image.load('img/background.jpg').convert()
-        background_imagem = pygame.transform.scale(background_imagem, (largura, altura))
 
         start_personagem = True
         while start_personagem:
@@ -234,6 +263,11 @@ while start:
                         selecionado.play()
                         print("P1 selecionou:", selected_index_p1)
                         print("P2 selecionou:", selected_index_p2)
+                        personagem_1 = sprite_personagens[selected_index_p1]
+                        personagem_2 = sprite_personagens[selected_index_p2]
+                        lista = matriz_sprite[selected_index_p1]
+                        lista_1 = matriz_sprite[selected_index_p2]
+
                         time.sleep(1)
                         variavel = 2
                         start_personagem = False
@@ -286,10 +320,11 @@ while start:
                         selecionado.play()
                         time.sleep(.5)
                         pygame.mixer.stop()
+                        musica2()
                         variavel = 3
                         start_mapa = False
                     elif event.key == pygame.K_ESCAPE:
-                        pygame.mixer.stop()
+
                         time.sleep(0.5)
                         variavel = 1
                         start_mapa = False
@@ -303,15 +338,15 @@ while start:
 
     if variavel == 3:
 
-        IDLE = pygame.image.load('sprites/Fighter/Idle.png').convert_alpha()
+        SPRITE1 = personagem_1
+        SPRITE2 = personagem_2
 
         FIGHTER_SIZE = 128
-        FIGHTER_SCALE = 2.3
-        FIGHTER_OFFSET = [44,50]
+        FIGHTER_SCALE = 3
+        FIGHTER_OFFSET = [46,50]
         FIGHER_DATA = [FIGHTER_SIZE, FIGHTER_SCALE, FIGHTER_OFFSET]
-        #Animação = [n° frames/linha]
-        ANIMATION_IDLE = [6,4,10,4,3,8,3,2,3]
 
+        
         def draw_life_bar(life, x, y):
             ratio = life / 100
             pygame.draw.rect(tela, 'black',(x -2,y -2 , 253,24))
@@ -327,16 +362,18 @@ while start:
 
 
 
-        player_1 = character(100,5,40,400, 180, FIGHER_DATA, IDLE,ANIMATION_IDLE, tela)
-        player_2 = character(100,5,680,400, 180, FIGHER_DATA, IDLE, ANIMATION_IDLE, tela)
+        player_1 = character(100,5,40,370, 180, FIGHER_DATA, SPRITE1,lista, tela)
+        player_2 = character(100,5,680,370, 180, FIGHER_DATA, SPRITE2, lista_1, tela)
 
 
-        pygame.mixer.music.stop()
+        round()
         start_jogo = True
         while counter<=3 and start_jogo:
 
-            tela.fill('gray')
+            fight_scene = pygame.transform.scale(mapas[selected_index], (largura, altura))
+            tela.blit(fight_scene, (0,0))
 
+            
             #adicionando movimento e limite na tela
             player_1.move(pygame.K_w, pygame.K_a, pygame.K_d, pygame.K_k, pygame.K_l,pygame.K_j, player_2)
             player_2.move(pygame.K_UP,pygame.K_LEFT,pygame.K_RIGHT, pygame.K_1,pygame.K_2,pygame.K_3,player_1)
@@ -347,34 +384,150 @@ while start:
             player_2.update_sprites()
 
             #desenhando os jogadores na tela
-            player_1.draw('red')
-            player_2.draw('blue')
+            player_1.draw()
+            player_2.draw()
 
             #desenhando a vida do jogador
             draw_life_bar(player_1.life,20,20)
             enemy_draw_life_bar(player_2.life,530,20)
 
-            if player_1.life <= 0:
-                counter += 1
+
+            
+            if player_1.image == player_1.animation_list[7][-1] and player_2.image == player_2.animation_list[8][-1]:
+                pygame.display.update()
+                time.sleep(1)
+                counterp2 += 1
+                counter += counterp2
                 start_jogo = False
-                variavel = 3
-            if player_2.life <=0:
-                counter += 1
+                if counterp2 == 2:
+                    variavel = 4
+                    counterp2 = 0
+                    counter = 0
+                    vencedor = nomes[selected_index_p2]
+            if player_2.image == player_2.animation_list[7][-1] and player_1.image == player_1.animation_list[8][-1]:
+                pygame.display.update()
+                time.sleep(1)
+                counterp1 += 1
+                counter += counterp1
                 start_jogo = False
-                variavel = 3
+                
+
+                if counterp1 == 2:
+                    variavel = 4
+                    counterp1 = 0
+                    counter = 0
+                    vencedor = nomes[selected_index_p1]
+
             if counter == 3:
                 start_jogo = False
-                variavel = 2
+                variavel = 4
+                if counterp1 > counterp2:
+                    vencedor = nomes[selected_index_p1]
+                else:
+                    vencedor = nomes[selected_index_p2]
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    start_jogo = False
-                    start = False
+                    pygame.quit()
+                    sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.type == pygame.K_ESCAPE:
                         start_jogo = False
-                        start = False
-                        variavel = 2
+                        variavel = 0
 
             Clock.tick(60)
             pygame.display.update()
+
+    if variavel == 4:
+        # Tamanho dos blocos
+        block_width = 300
+        block_height = 100
+
+        back = pygame.image.load("img/background.jpg")
+        back = pygame.transform.scale(back, (largura, altura))
+
+        # Função para desenhar um bloco
+        def draw_block(tela, name, x, y):
+            block_rect = pygame.Rect(x, y, block_width, block_height)
+            
+            # Desenha a borda preta
+            pygame.draw.rect(tela, BLACK, block_rect)
+            
+            # Desenha o preenchimento branco
+            inner_rect = pygame.Rect(x + 2, y + 2, block_width - 4, block_height - 4)
+            pygame.draw.rect(tela, WHITE, inner_rect)
+            
+            # Desenha o texto
+            text = font4.render(name[0], True, BLACK)
+            text_rect = text.get_rect(center=block_rect.center)
+            tela.blit(text, text_rect)
+
+
+        #lê o arquivo txt-----------------------------------------------------------
+        with open("pontuacao_personagens.txt", 'r') as arquivo:
+            pontuacao = arquivo.readlines()
+
+        #Adiciona 1 ponto
+        for i, linha in enumerate(pontuacao):
+            nome, pontos = linha.strip().split(',')
+            if nome == vencedor:
+                pontos = int(pontos) + 1 
+                pontuacao[i] = f"{nome},{pontos}\n"
+                break
+
+        #Faz uma matriz desorganizada
+        lista_desatualizada = []
+        for i, linha in enumerate(pontuacao):
+            nome, pontos = linha.strip().split(',')
+            lista_desatualizada.append([])
+            lista_desatualizada[i].append(nome)
+            lista_desatualizada[i].append(int(pontos))
+        print(lista_desatualizada)
+
+
+        #Organiza a matriz conforme a segunda coluna de cada linha
+        lista_atualizada = sorted(lista_desatualizada, key=lambda x: x[1], reverse=True)
+        print(lista_atualizada)
+
+        #Escreve no arquivo txt
+        with open('pontuacao_personagens.txt', 'w') as arquivo:
+            arquivo.writelines(pontuacao)
+        arquivo.close()
+        ranking = []
+        cont = 0
+        for i in lista_atualizada:
+            ranking.append([])
+            ranking[cont].append(f"{cont + 1}°  {lista_atualizada[cont][0]} ({lista_atualizada[cont][1]})")
+            cont += 1
+
+        # Função principal
+        def main2():
+            clock = pygame.time.Clock()
+
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            return 0                       
+
+                # Desenha o fundo
+
+                tela.blit(back, (0, 0))
+
+                # Calcula a posição dos blocos
+                for i, name in enumerate(ranking):
+                    x = (largura - block_width) / 2
+                    y = (altura - block_height * 4) / 2 + i * (block_height + 10)
+                    draw_block(tela, name, x, y)
+
+                pygame.display.flip()
+                clock.tick(60)
+        if __name__ == '__main__':
+            main2()
+            if main2() == 0:
+                variavel = 0
+                pygame.mixer.music.stop()
+                musica1()
