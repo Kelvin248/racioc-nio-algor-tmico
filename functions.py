@@ -145,11 +145,11 @@ class character:
         
         if self.attack_grid:
             if key[attack1] or key[attack2]:        
-                if key[attack1] and not key[attack2] and not key[attack3]:
+                if key[attack1] and not key[attack2] and not key[attack3] and self.jump:
                     self.attack(target,punch=True, kick=False)
                     self.attack_type = 1
                     self.attack_accept = True
-                if key[attack2] and not key[attack1] and not key[attack3]:
+                if key[attack2] and not key[attack1] and not key[attack3] and self.jump:
                     self.attack(target, punch=False,kick=True)
                     self.attack_type = 2
                     self.attack_accept = True
@@ -268,7 +268,6 @@ class character:
 
             if kick == True and self.live and self.jump:
                 kick_attack = pygame.Rect(self.rect.centerx -(1.5* self.rect.width * self.rotate) ,self.rect.y+90, 1.5*self.rect.width,self.rect.height/2)
-
                 if kick_attack.colliderect(target) and not target.defend:
                     target.life -= 10
                     target.damage = True
@@ -291,7 +290,7 @@ class character:
                 kick_attack = pygame.Rect(self.rect.centerx -(1.5* self.rect.width * self.rotate) ,self.rect.y+90, 1.5*self.rect.width,self.rect.height/2)
                 
                 if kick_attack.colliderect(target) and not target.defend:
-                    target.life -= 3
+                    target.life -= 15
                     target.damage = True
                     if self.attack_grid:
                         dam3()

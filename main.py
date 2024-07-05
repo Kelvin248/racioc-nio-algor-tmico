@@ -268,6 +268,9 @@ while start:
                         lista = matriz_sprite[selected_index_p1]
                         lista_1 = matriz_sprite[selected_index_p2]
 
+                        selected_index_p2 = 3
+                        selected_index_p1 = 0
+
                         time.sleep(1)
                         variavel = 2
                         start_personagem = False

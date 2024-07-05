@@ -1,4 +1,4 @@
 Adryan,0
-Gustavo,1
-Kelvin,2
-Caio,2
+Gustavo,0
+Kelvin,0
+Caio,0
